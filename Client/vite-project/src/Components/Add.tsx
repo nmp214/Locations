@@ -6,14 +6,17 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { Button, TextField } from "@mui/material";
 import { isToken } from "../Services/cookies";
-import { addLocation } from "../Services/CRUD";
+import { addLocation } from "../Services/CRUD copy";
 import { Area } from "../Services/location";
 import SendIcon from '@mui/icons-material/Send';
 import { getItem } from "../Services/service";
 import { endPoint } from "../Services/config";
 
+// Progress in mui for waiting when adding location
+
 const Add: React.FC = () => {
-  const [file, setFile] = useState<Array<File> | null>(null)
+  const [file, setFile] = useState<File | null>(null);
+  const [fileList, setFileList] = useState<FileList | null>(null);
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [image, setImage] = useState('')
@@ -33,9 +36,10 @@ const Add: React.FC = () => {
   const add = (event: React.FormEvent) => {
     event.preventDefault();
     if (isToken()) {
-      // addLocation(isAdmin, name, address, image, description, area, likes, 0, '', file!);
+      console.log('name: ', name, ', address: ', address, 'file: ', file);
+      // addLocation(isAdmin, name, address, image, description, area, likes, 0, [], '', file!, fileList!);
       // console.log(file?.name, ' ', image);
-      addLocation(isAdmin, name, address, image, description, area, likes, 0, '');
+      addLocation(isAdmin, 0, name, address, image, description, area, likes, [], file!, fileList!);
       setName('');
       setAddress('');
       setImage('');
@@ -47,25 +51,31 @@ const Add: React.FC = () => {
   }
 
   const handleChange = (event: SelectChangeEvent) => {
+    // const value = 
     setArea(event.target.value as string);
   }
 
-  const handleFile = (files: Array<File>) => {
-    console.log('handleFile ', files);
-    setFile(file);
+  const handleFile = (newFile: File) => {
+    console.log('handleFile ', newFile);
+    setFile(newFile);
     // setImage(file.name);
+  }
+
+  const handleMultipleFiles = (newFiles: FileList) => {
+    console.log('handleMultipleFiles ', newFiles);
+    setFileList(newFiles);
   }
 
   const [file2, setfile] = useState('');
 
-  const f=(e: ChangeEvent<HTMLButtonElement>)=>{
+  const f = (e: ChangeEvent<HTMLButtonElement>) => {
     console.log(file2);
     console.log(e);
   }
 
   return (<>
     <h1>הוספת לוקיישן</h1>
-    <form dir="rtl">
+    <form dir="rtl" onSubmit={add}>
       <FormControl fullWidth>
         <TextField
           required
@@ -94,7 +104,7 @@ const Add: React.FC = () => {
         </Select>
       </FormControl>
       <FormControl fullWidth>
-        <ImageUploader handleFile={handleFile} required/>
+        <ImageUploader handleFile={handleFile} handleMultipleFiles={handleMultipleFiles} required />
       </FormControl>
       <Button type="submit" variant="contained" endIcon={<SendIcon />}>שליחה</Button>
     </form>
