@@ -12,6 +12,10 @@ export const addItem = (item: any, url: string) => axios.post(url, item, config)
 export const editItem = (item: any, url: string) => axios.put(`${url}/${item}`,config, { params: { item }} );
 export const updateItem = (item: location, url: string) => axios.patch(`${url}/${item.id}`, item, config);
 export const deleteItem = (del: del, url: string) => axios.delete(`${url}/${del.id}/${del.isTemp}`, config);
+//   @Delete('delete/:id/:isTemp')
+
+// new
+export const response = (query: string, url: string) => axios.post(url, {query}); // Send the user's query in the request body
 
 const token = getCookie("token");
 const config = {

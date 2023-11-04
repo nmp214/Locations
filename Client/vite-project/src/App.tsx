@@ -5,6 +5,7 @@ import Login from './Components/Login';
 import Add from './Components/Add';
 import Signup from './Components/SignUp';
 import Locations from './Components/Locations';
+import Maps from './Components/Maps';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css'
@@ -57,7 +58,7 @@ const App: React.FC = () => {
         <Route path='/location' Component={Locations} />
         <Route path='/add' Component={Add} />
         <Route path='/edit' Component={Edit} />
-
+        <Route path='/maps' Component={Maps} />
         {/* </HomePage> */}
         <Route path='/openLocation' Component={OpenLocation} />
       </Routes>

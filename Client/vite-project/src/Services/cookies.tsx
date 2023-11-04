@@ -6,13 +6,11 @@ export function setCookie(name: string, value: string, days: number) {
 }
 
 export function getCookie(name: string): string | null {
-    console.log("getCookie");
     const cookieString = document.cookie;
     const cookies = cookieString.split(";");
     for (let i = 0; i < cookies.length; i++) {
         const cookie = cookies[i].trim();
         if (cookie.startsWith(name + "=")) {
-            console.log("cookie: " + cookie.substring(name.length + 1))
             return cookie.substring(name.length + 1);
         }
     }

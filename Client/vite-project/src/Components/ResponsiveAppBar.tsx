@@ -34,7 +34,7 @@ function ResponsiveAppBar() {
     if (isToken()) {
         getItem(`${endPoint}/user/userName`).then(res => {
             setUserName(res.data);
-            console.log("userName ", res);
+            // console.log("userName ", res);
         });
     }
     // const history = useHistory();

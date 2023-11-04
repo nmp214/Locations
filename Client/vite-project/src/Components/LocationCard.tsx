@@ -16,7 +16,7 @@ import { isToken } from '../Services/cookies';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { addLocation } from '../Services/CRUD';
+import { addLocation } from '../Services/CRUD copy';
 import { useNavigate } from 'react-router-dom';
 import { errorAlert, successAlert } from '../Services/alerts';
 
@@ -36,7 +36,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 }));
 
 const LocationCard: React.FC<any> = (props) => {
-  console.log(props.location);
+  // console.log(props.location);
   const [expanded, setExpanded] = React.useState(false);
   const [likes, setLikes] = useState(props.location.likes);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -50,7 +50,7 @@ const LocationCard: React.FC<any> = (props) => {
   const propsId = props.location.id;
   getItem(`${endPoint}/location/isAdmin`).then(res => {
     setIsAdmin(res.data);
-    console.log("isAdmin? ", res.data);
+    // console.log("isAdmin? ", res.data);
   });
   const addLike = (id: number) => {
     if (isToken())
@@ -64,11 +64,11 @@ const LocationCard: React.FC<any> = (props) => {
       errorAlert('אינך משתמש רשום');
   }
   const add = () => {
-    addLocation(props.location.name, props.location.address, props.location.image, props.location.description, props.location.area, props.location.likes, propsId, props.location.imageUrl);
+    addLocation(true, propsId, props.location.name, props.location.address, props.location.imageUrl, props.location.description, props.location.area, props.location.likes, props.location.imagesList);
   }
 
   const edit = () => {
-    console.log(props.location);
+    // console.log(props.location);
     // <Edit />
     navigate('/edit', { state: { isTemp: props.isTemp, location: props.location } });
   }
@@ -90,9 +90,9 @@ const LocationCard: React.FC<any> = (props) => {
   }
 
   const open = () => {
-    console.log(props.location.imagesList.length);
+    // console.log(props.location.imagesList.length);
     if (props.location.imagesList.length > 0) {
-      console.log('locationCard', props.location.address);
+      console.log('locationCard', props.location.area);
       props.location.imagesList.map((image: string) => console.log(image));
       navigate('/openLocation', { state: { name: props.location.name, address: props.location.address, area: props.location.area, imagesList: props.location.imagesList } });
     }

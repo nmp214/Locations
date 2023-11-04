@@ -10,7 +10,7 @@ export interface location {
     id: number;
     name: string;
     address: string;
-    image: string;
+    // image: string;
     imageUrl: string;
     description: string;
     area: string;

@@ -3,7 +3,7 @@ import ImageUploader from "./ImageUploader"
 import { useState } from "react";
 import AddIcon from '@mui/icons-material/Add';
 import { editItem, getItem, updateItem } from "../Services/service";
-import { addLocation } from "../Services/CRUD";
+import { addLocation } from "../Services/CRUD copy";
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import { useLocation } from "react-router-dom";
 import { endPoint } from "../Services/config";
@@ -48,7 +48,7 @@ const Edit: React.FC = () => {
     }
 
     const add = () => {
-        addLocation(isAdmin, name, address, image, description, area, likes, 0, '', file!);
+        addLocation(isAdmin, 0, name, address, image, description, area, likes, [], file!);
         setName('');
         setAddress('');
         setImage('');
@@ -64,7 +64,7 @@ const Edit: React.FC = () => {
             name: name,
             address: address,
             description: description,
-            image: image,
+            // image: image,
             imageUrl: imageUrl,
             area: area,
             likes: likes,
