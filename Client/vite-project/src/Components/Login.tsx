@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { addItem } from "../Services/service";
+import { addItem, response } from "../Services/service";
 import { endPoint } from "../Services/config";
 import { setCookie } from "../Services/cookies";
 import { Box, Card, CardContent, CardHeader, Grid, Paper, TextField } from "@mui/material";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { infoAlert, successAlert } from "../Services/alerts";
+import img from '../assets/camera.jpg';
 
 const Login: React.FC = () => {
     const [name, setName] = useState('');
@@ -35,11 +36,53 @@ const Login: React.FC = () => {
             });
     }
 
+    useEffect(() => {
+        // function initMap() {
+        //     console.log('initMap');
+        //     const { Map } = window.google.maps.importLibrary("maps") as window.google.maps.MapsLibrary;
+        //     // map = new Map(document.getElementById("map") as HTMLElement, {
+        //     const mapElement = document.getElementById("map")!;
+        //     const map = new window.google.maps.Map(mapElement, {
+        //         center: { lat: -34.397, lng: 150.644 },
+        //         zoom: 8,
+        //     });
+        // }
+        // if (window.google && window.google.maps) {
+        //   initMap();
+        // }
+        // else {
+        //   const script = document.createElement('script');
+        //   script.src = 'https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap';
+        //   script.async = true;
+        //   document.body.appendChild(script);
+        // }
+    }, []);
+
+
+    // new
+    const [query, setQuery] = useState('');
+    const [results, setResults] = useState<{ document: string }[]>([]);
+
+    const handleSearch = () => {
+        response(query, `${endPoint}/location/find-similar`)
+            .then(res => {
+                console.log(res);
+                if (res.status === 200) {
+                    setResults(res.data.similarDocuments);
+                    console.log(res.data.similarDocuments);
+                } else {
+                    console.error('Request failed');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
     return (
         <>
             <Paper
                 sx={{
-                    backgroundImage: `url(https://firebasestorage.googleapis.com/v0/b/imglocations.appspot.com/o/images%2F%D7%9E%D7%A6%D7%9C%D7%9E%D7%94.jpg?alt=media&token=6e560377-d581-435e-84ab-881d352e91d2)`,
+                    // backgroundImage: `url(https://firebasestorage.googleapis.com/v0/b/imglocations.appspot.com/o/images%2F%D7%9E%D7%A6%D7%9C%D7%9E%D7%94.jpg?alt=media&token=6e560377-d581-435e-84ab-881d352e91d2)`,
+                    backgroundImage: `url(${img})`,
                     backgroundSize: 'cover',
                     backgroundRepeat: 'no-repeat',
                     width: '100%',
@@ -91,6 +134,23 @@ const Login: React.FC = () => {
                     הרשם כאן!
                 </button>
             </Card>
+            <div>
+                <input
+                    type="text"
+                    placeholder="Search..."
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                />
+                <button onClick={handleSearch}>Search</button>
+
+                <ul>
+                    {results.map((result, index) => (
+                        <li key={index}>{result.document}</li>
+                    ))}
+                </ul>
+            </div>
+            <div id='map' style={{ height: '400px' }}></div>
+
             {/* <ImageDownloader /> */}
         </>
     );

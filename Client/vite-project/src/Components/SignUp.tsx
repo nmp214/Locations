@@ -5,6 +5,7 @@ import { Box, Card, CardContent, CardHeader, Grid, Paper, TextField } from "@mui
 import { ToastContainer } from 'react-toastify';
 import { errorAlert, successAlert } from "../Services/alerts";
 import 'react-toastify/dist/ReactToastify.css';
+import img from '../assets/camera.jpg';
 
 const SignUp: React.FC = () => {
     const [name, setName] = useState('');
@@ -25,7 +26,8 @@ const SignUp: React.FC = () => {
         <>
             <Paper
                 sx={{
-                    backgroundImage: `url(https://firebasestorage.googleapis.com/v0/b/imglocations.appspot.com/o/images%2F%D7%9E%D7%A6%D7%9C%D7%9E%D7%94.jpg?alt=media&token=6e560377-d581-435e-84ab-881d352e91d2)`,
+                    // backgroundImage: `url(https://firebasestorage.googleapis.com/v0/b/imglocations.appspot.com/o/images%2F%D7%9E%D7%A6%D7%9C%D7%9E%D7%94.jpg?alt=media&token=6e560377-d581-435e-84ab-881d352e91d2)`,
+                    backgroundImage: `url(${img})`,
                     backgroundSize: 'cover',
                     backgroundRepeat: 'no-repeat',
                     width: '100%',

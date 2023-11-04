@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { getToHome } from '../Services/service';
+import { getToHome, response } from '../Services/service';
 import { endPoint } from '../Services/config';
 import Grid from '@mui/material/Grid';
 import CardMedia from '@mui/material/CardMedia';
 import LocationCard from './LocationCard';
 import img from '../assets/location.png';
+import { withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
 
 const Home: React.FC = () => {
   // const [locations, setLocations] = useState([{ id: 0, name: '', address: '', image: '', description: '', likes: 0 }]);
@@ -13,21 +14,34 @@ const Home: React.FC = () => {
   const last = "last";
   const likes = "likes";
   const setLocations = () => {
-    console.log('setLocations');
+    // console.log('setLocations');
     getToHome(last, `${endPoint}/location/getToHome`)
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
         setLastLocations(response.data);
       })
       .catch(err => console.log(err));
     getToHome(likes, `${endPoint}/location/getToHome`)
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
         setPopularLocations(response.data);
       });
   }
 
+  // const google = window.google;
+  // let map: google.maps.Map;
+  // async function init(): Promise<void> {
+  //   const { Map } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
+  //   map = new Map(document.getElementById('map') as HTMLElement, {
+  //     center: { lat: -34.397, lng: 150.644 },
+  //     zoom: 8,
+  //   });
+  //   console.log('google: ', google, ' map: ', map);
+  // }
+  // init();
+
   setLocations();
+
   return (
     <div>
 
@@ -42,6 +56,10 @@ const Home: React.FC = () => {
         alt="התמונה לא עלתה"
       />
       <div>
+        {/* <div id='map' style={{ height: '400px' }}></div> */}
+
+
+
         <h2>הלוקיישנים האחרונים</h2>
         <Grid sx={{ flexGrow: 1 }} container spacing={2}>
           <Grid item xs={12}>
@@ -60,7 +78,7 @@ const Home: React.FC = () => {
           <Grid item xs={12}>
             <Grid container justifyContent="center" spacing={2}>
               {popularLocations[0].id != 0 && popularLocations.map((location, index) => (
-                <LocationCard key={index} isTemp={false} location={location}/>
+                <LocationCard key={index} isTemp={false} location={location} />
               )) || ''}
               {/* id={location.id} name={location.name} address={location.address} image={location.image} imageUrl={location.imageUrl} description={location.description} area={location.area} likes={location.likes} date={new Date}  */}
             </Grid>

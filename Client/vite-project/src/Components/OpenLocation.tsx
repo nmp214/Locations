@@ -3,48 +3,8 @@ import Card from '@mui/material/Card';
 import { CardContent, CardHeader, Grid, ImageList, ImageListItem } from '@mui/material';
 // import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Loader } from "@googlemaps/js-api-loader"
-
 
 const OpenLocation: React.FC = () => {
-
-    React.useEffect(() => {
-        initMap();
-    });
-
-    const button1 = document.getElementById('button1');
-    button1?.addEventListener('click', () => console.log('Clicked'));
-    let map: google.maps.Map;
-    async function initMap(): Promise<void> {
-        console.log('initMap');
-        const { Map } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
-        console.log('map before:', map);
-        map = new Map(document.getElementById('map') as HTMLElement, {
-            center: { lat: -34.397, lng: 150.644 },
-            zoom: 8,
-        });
-        // const map2 = document.getElementById('map');
-        // map2?.append('div');
-        console.log('map after:', map);
-    }
-    const loader = new Loader({
-        apiKey: "AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg",
-        version: "weekly",
-        // ...additionalOptions,
-    });
-
-    loader.load().then(async () => {
-        console.log('loading');
-        const { Map } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
-        map = new Map(document.getElementById('map') as HTMLElement, {
-            center: { lat: -34.397, lng: 150.644 },
-            zoom: 8,
-        });
-        console.log('second map:', map);
-    });
-
-
-
     console.log('Open Location');
     const location = useLocation();
     const description = location.state && location.state.description;
@@ -63,9 +23,6 @@ const OpenLocation: React.FC = () => {
                         subheader={address + ' ' + area}>
                     </CardHeader>
                     <CardContent>
-                        <div id='map'>maps2</div>
-                        <div id='div1'>div1</div>
-                        <button id='button1'></button>
                     </CardContent>
                 </Grid>
                 <Grid>
@@ -103,38 +60,6 @@ const itemData = [
     {
         img: 'https://firebasestorage.googleapis.com/v0/b/imglocations.appspot.com/o/images%2FIMG_8563.JPG?alt=media&token=fa6a2c64-5ed8-4fd7-b71d-c88e69b19b84',
         title: 'Kitchen',
-    },
-    {
-        img: '                                                            ',
-        title: 'Blinds',
-    },
-    {
-        img: '                                                            ',
-        title: 'Chairs',
-    },
-    {
-        img: '                                                            ',
-        title: 'Laptop',
-    },
-    {
-        img: '                                                            ',
-        title: 'Doors',
-    },
-    {
-        img: '                                                            ',
-        title: 'Coffee',
-    },
-    {
-        img: '                                                            ',
-        title: 'Storage',
-    },
-    {
-        img: '                                                            ',
-        title: 'Candle',
-    },
-    {
-        img: '                                                            ',
-        title: 'Coffee table',
     },
 ];
 export default OpenLocation
