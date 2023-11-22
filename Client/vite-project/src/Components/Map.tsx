@@ -4,7 +4,7 @@ import "./Map.css";
 
 const Map: React.FC<any> = (props) => {
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: 'AIzaSyCgSs4v4dFmksNBhFslHzzJoadAuJuMuMA',
+    googleMapsApiKey: 'MyApiKey',
   });
   console.log('lat: ' + props.pointLat, ' lng: ' + props.pointLng);
   const lat = props.pointLat;
