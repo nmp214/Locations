@@ -3,6 +3,7 @@ import Card from '@mui/material/Card';
 import { CardContent, CardHeader, Grid, ImageList, ImageListItem } from '@mui/material';
 // import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import Map from './Map';
 
 const OpenLocation: React.FC = () => {
     console.log('Open Location');
@@ -11,10 +12,13 @@ const OpenLocation: React.FC = () => {
     const address = location.state && location.state.address;
     const area = location.state && location.state.area;
     const name = location.state && location.state.name;
+    const pointLat = location.state && location.state.pointLat;
+    const pointLng = location.state && location.state.pointLng;
     const imagesList = location.state && location.state.imagesList;
-    console.log(name + ' ' + area + ' ' + address);
+    console.log(name, ' ', area + ' ', address, ' ', pointLat, ' ', pointLng );
     // const [images, setImages] = useState(props.imagesList);
     return (
+      <>
         <Card sx={{ width: 1000, height: 600, margin: 10 }}>
             <Grid container direction={'row-reverse'}>
                 <Grid>
@@ -37,10 +41,15 @@ const OpenLocation: React.FC = () => {
                                 />
                             </ImageListItem>
                         ))}
+                         
                     </ImageList>
                 </Grid>
+               
             </Grid>
+           
         </Card>
+         <Map pointLat={pointLat} pointLng={pointLng}/>
+         </>
     );
 }
 

@@ -25,6 +25,11 @@ const Add: React.FC = () => {
   const [likes, setLikes] = useState(1);
   const [date, setDate] = useState(Date.now());
   const [isAdmin, setIsAdmin] = useState(false);
+  const [pointLat, setPointLat] = useState(0);
+  const [pointLng, setPointLng] = useState(0);
+const select = '123';
+
+  const [loading, setLoading] = useState(false);
 
   const keys = Object.keys(Area);
   let values = Object.values(Area);
@@ -39,7 +44,10 @@ const Add: React.FC = () => {
       console.log('name: ', name, ', address: ', address, 'file: ', file);
       // addLocation(isAdmin, name, address, image, description, area, likes, 0, [], '', file!, fileList!);
       // console.log(file?.name, ' ', image);
-      addLocation(isAdmin, 0, name, address, image, description, area, likes, [], file!, fileList!);
+      setLoading(true);
+    const answer: any = addLocation(isAdmin, 0, name, address, image, description, area, likes, [], pointLat, pointLng, file!, fileList!);
+      console.log('finished loading! ', answer);
+      setLoading(false);
       setName('');
       setAddress('');
       setImage('');
@@ -51,8 +59,13 @@ const Add: React.FC = () => {
   }
 
   const handleChange = (event: SelectChangeEvent) => {
-    // const value = 
-    setArea(event.target.value as string);
+    console.log(event);
+    console.log(event.target.value);
+    console.log(keys);
+    const index = keys.indexOf(event.target.value as Area);
+    console.log(index, ' ', values[index]);
+    setArea(values[index]);
+    // setArea(event.target.value);
   }
 
   const handleFile = (newFile: File) => {
@@ -88,26 +101,46 @@ const Add: React.FC = () => {
         <TextField id="outlined-basic" label="כתובת" variant="outlined" onChange={(e) => setAddress(e.target.value)} required />
         <br /> </FormControl>
       <FormControl fullWidth>
-        <TextField id="outlined-basic" label="תאור" variant="outlined" onChange={(e) => setDescription(e.target.value)} />
-        <br />  </FormControl>
-      <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">אזור</InputLabel>
         <Select
           required
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={area}
+          // value={area}
           label="area"
+          name="select"
           onChange={handleChange}
         >
           {values.map((value, index) => <MenuItem key={index} value={keys[index]}>{value}</MenuItem>)}
-        </Select>
+        </Select> <br />
       </FormControl>
+      <FormControl fullWidth>
+        <TextField id="outlined-basic" label="תאור" variant="outlined" onChange={(e) => setDescription(e.target.value)} />
+        <br />  </FormControl>
+      <label title="כדי לזהות את המיקום על המפה, 
+עמוד על סימון המיקום המדויק בגוגל מפות 
+ועל ידי לחצן ימני תקבל את שני מרכיבי המיקום:
+הראשון הוא lat והשני הוא lng ">מיקום על המפה</label>
+      <br />
+      <div style={{ display: 'flex', padding: 20, justifyContent: 'space-evenly', flexDirection: 'row' }}>
+        <FormControl >
+          <TextField id="outlined-basic" label="lat" placeholder="alt" variant="outlined" onChange={(e) => setPointLat(parseFloat(e.target.value))} />
+        </FormControl>
+        <FormControl >
+          <TextField id="outlined-basic" label="lng" placeholder="lng" variant="outlined" onChange={(e) => setPointLng(parseFloat(e.target.value))} />
+          <br /> </FormControl>
+      </div>
+
       <FormControl fullWidth>
         <ImageUploader handleFile={handleFile} handleMultipleFiles={handleMultipleFiles} required />
       </FormControl>
       <Button type="submit" variant="contained" endIcon={<SendIcon />}>שליחה</Button>
     </form>
+
+    <div>
+      {loading && <p>Uploading...</p>}
+    </div>
+
   </>);
 }
 

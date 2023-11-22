@@ -18,6 +18,11 @@ export interface location {
     date: Date;
     imagesList: Array<string>;
     information: string;
+    point: Point;
+}
+export interface Point{
+    lat: number;
+    lng: number;
 }
 
 export interface search {
@@ -30,3 +35,7 @@ export interface del {
     isTemp: boolean;
 }
 
+export interface update {
+    item: location;
+    isTemp: boolean;
+}

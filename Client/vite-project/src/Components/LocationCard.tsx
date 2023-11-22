@@ -36,7 +36,6 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 }));
 
 const LocationCard: React.FC<any> = (props) => {
-  // console.log(props.location);
   const [expanded, setExpanded] = React.useState(false);
   const [likes, setLikes] = useState(props.location.likes);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -64,37 +63,35 @@ const LocationCard: React.FC<any> = (props) => {
       errorAlert('אינך משתמש רשום');
   }
   const add = () => {
-    addLocation(true, propsId, props.location.name, props.location.address, props.location.imageUrl, props.location.description, props.location.area, props.location.likes, props.location.imagesList);
+    addLocation(true, propsId, props.location.name, props.location.address, props.location.imageUrl, props.location.description, props.location.area, props.location.likes, props.location.imagesList, props.location.point.lat, props.location.point.lng);
   }
 
   const edit = () => {
-    // console.log(props.location);
-    // <Edit />
     navigate('/edit', { state: { isTemp: props.isTemp, location: props.location } });
   }
 
   const del = () => {
     console.log('isTemp', props.isTemp);
-    console.log('del');
     const del = {
       id: propsId,
       isTemp: props.isTemp
     }
+    console.log('del: ', del);
     deleteItem(del, `${endPoint}/location/delete`).then(() => {
       console.log('deleted successfully');
-      if (shouldReload) {
+      successAlert('לוקיישן זה הוסר בהצלחה');
+      setTimeout(() => {
         window.location.reload();
-        successAlert('לוקיישן זה הוסר בהצלחה');
-      }
+      }, 3000);
+      navigate('/Location');
     });
   }
 
   const open = () => {
-    // console.log(props.location.imagesList.length);
-    if (props.location.imagesList.length > 0) {
+    if (props.location.imagesList.length > 0 || props.location.point) {
       console.log('locationCard', props.location.area);
       props.location.imagesList.map((image: string) => console.log(image));
-      navigate('/openLocation', { state: { name: props.location.name, address: props.location.address, area: props.location.area, imagesList: props.location.imagesList } });
+      navigate('/openLocation', { state: { name: props.location.name, address: props.location.address, area: props.location.area, imagesList: props.location.imagesList, pointLat: props.location.point.lat, pointLng: props.location.point.lng } });
     }
   }
 
@@ -104,7 +101,7 @@ const LocationCard: React.FC<any> = (props) => {
         action={
           <>
             {isAdmin && <IconButton id={propsId.toString()} onClick={() => edit()}> <EditIcon /></IconButton> || ''}
-            {isAdmin && <IconButton id={propsId.toString()} onClick={() => add()}> <AddIcon /></IconButton> || ''}
+            {isAdmin && props.isTemp && <IconButton id={propsId.toString()} onClick={() => add()}> <AddIcon /></IconButton> || ''}
             {isAdmin && <IconButton id={propsId.toString()} onClick={() => del()}> <DeleteIcon /></IconButton> || ''}
           </>
         }

@@ -64,7 +64,7 @@ const Filter: React.FC = () => {
             label="אזור"
             onChange={e => setSelect(e.target.value)}
           >
-            {values.map((value, index) => <MenuItem dir="rtl" value={keys[index]}>{value}</MenuItem>)}
+            {values.map((value, index) => <MenuItem dir="rtl" key={index} value={keys[index]}>{value}</MenuItem>)}
           </Select>
         </FormControl>
         <br />

@@ -27,8 +27,10 @@ export const upload = async (file: File) => {
   // const snapshot = 
   await uploadBytes(storageRef, file, metadata);
   console.log('Uploaded a blob or file!');
- return download(file.name).then((response) => {console.log(response);
-return response;});
+  return download(file.name).then((response) => {
+    console.log(response);
+    return response;
+  });
 }
 
 export const download = async (name: string): Promise<string> => {

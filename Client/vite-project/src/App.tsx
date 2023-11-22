@@ -5,7 +5,7 @@ import Login from './Components/Login';
 import Add from './Components/Add';
 import Signup from './Components/SignUp';
 import Locations from './Components/Locations';
-import Maps from './Components/Maps';
+import Maps from './Components/Maps2';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css'
@@ -16,6 +16,7 @@ import Edit from './Components/Edit';
 import OpenLocation from './Components/OpenLocation';
 import Background from './Components/HomePage';
 import HomePage from './Components/HomePage';
+import renderMaps from './Components/Map';
 
 // function App() {
 
